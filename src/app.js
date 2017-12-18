@@ -2,7 +2,7 @@ class IndecisionApp extends React.Component {
   render(){
     const title = "Indecision App";
     const subtitle = "This is the subtitle content";
-    const options = ['option 1', 'option 2', 'option 3'];
+    let options = ['option 1', 'option 2', 'option 3'];
 
     return(
       <div>
@@ -10,6 +10,7 @@ class IndecisionApp extends React.Component {
         <Action />
         <Options options={ options }/>
         <AddOption />
+        <RemoveAll />
       </div>
     );
   };
@@ -28,13 +29,33 @@ class Header extends React.Component{
 }
 
 class Action extends React.Component{
-    render(){
-      return(
-        <div>
-          <button>Action button</button>
-        </div>
-      );
-    }
+
+  handlePick(){
+    alert('handlePick');
+  }
+
+  render(){
+    return(
+      <div>
+        <button onClick={ this.handlePick }>Action button</button>
+      </div>
+    );
+  }
+}
+
+class RemoveAll extends React.Component{
+
+  handleRemoveAll(){
+    alert('RemoveAll');
+  }
+
+  render(){
+    return(
+      <div>
+        <button onClick={ this.handleRemoveAll }>Remove All</button>
+      </div>
+    );
+  }
 }
 
 class Options extends React.Component{
@@ -56,13 +77,23 @@ class Option extends React.Component{
 }
 
 class AddOption extends React.Component{
-    render(){
-      return(
-        <div>
-          AddOption here
-        </div>
-      );
+
+  handleAddOption( e ){
+    e.preventDefault();
+    const option = e.target.option.value.trim();
+    if (option) {
+        alert(option);
     }
+  }
+
+  render(){
+    return(
+      <form onSubmit={ this.handleAddOption }>
+        <input type="text" name="option" placeholder="Add option here"></input>
+        <button>Submit</button>
+      </form>
+    );
+  }
 }
 
 ReactDOM.render( <IndecisionApp />, document.getElementById('app') );
