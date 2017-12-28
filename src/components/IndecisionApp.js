@@ -4,12 +4,17 @@ import AddOption from './AddOption';
 import Options from './Options';
 import Header from './Header';
 import Action from './Action';
+import OptionModal from './OptionModal';
 
 export default class IndecisionApp extends React.Component {
   state = {
-    options : []
+    options : [],
+    selectedOption : undefined
   };
 
+  handleClearSelectedOption = () => {
+    this.setState(()=>( {selectedOption : undefined} ));
+  };
   handleDeleteOptions = () => {
     this.setState(()=>( { options : [] } ));
   };
@@ -24,7 +29,7 @@ export default class IndecisionApp extends React.Component {
   handlePick = () => {
     const randIndex = Math.floor( Math.random() * this.state.options.length);
     const option = this.state.options[randIndex];
-    alert(option);
+    this.setState( () => ({ selectedOption: option }) );
   };
   handleAddOption = (option) => {
     if (!option) {
@@ -54,6 +59,7 @@ export default class IndecisionApp extends React.Component {
       localStorage.setItem('options', json);
     }
   }
+
   render(){
     const subtitle = "This is the subtitle content";
 
@@ -68,6 +74,9 @@ export default class IndecisionApp extends React.Component {
           handleDeleteOptions={this.handleDeleteOptions}
           handleDeleteOption={this.handleDeleteOption}/>
         <AddOption handleAddOption={this.handleAddOption}/>
+        <OptionModal
+          selectedOption={this.state.selectedOption}
+          handleClearSelectedOption={this.handleClearSelectedOption}/>
       </div>
     );
   };
